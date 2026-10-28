@@ -280,7 +280,8 @@ enum esb_tx_mode {
 enum esb_evt_id {
 	ESB_EVENT_TX_SUCCESS, /**< Event triggered on TX success. */
 	ESB_EVENT_TX_FAILED,  /**< Event triggered on TX failure. */
-	ESB_EVENT_RX_RECEIVED /**< Event triggered on RX received. */
+	ESB_EVENT_RX_RECEIVED, /**< Event triggered on RX received. */
+	ESB_EVENT_PRX_ACK_SENT /**< PRX ACK transmission completed. */
 };
 
 /** @brief Enhanced ShockBurst payload.
@@ -304,6 +305,8 @@ struct esb_payload {
 struct esb_evt {
 	enum esb_evt_id evt_id;	/**< Enhanced ShockBurst event ID. */
 	uint32_t tx_attempts;	/**< Number of TX retransmission attempts. */
+	uint8_t pipe;		/**< PRX pipe for ESB_EVENT_PRX_ACK_SENT. */
+	bool ack_payload;	/**< Whether the PRX ACK carried a payload. */
 };
 
 /** @brief Event handler prototype. */
