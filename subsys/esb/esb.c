@@ -982,7 +982,9 @@ static bool update_radio_crc(void)
 	switch (esb_cfg.crc) {
 	case ESB_CRC_16BIT:
 		nrf_radio_crcinit_set(NRF_RADIO, 0xFFFFUL); /* Initial value */
-		nrf_radio_crc_configure(NRF_RADIO, ESB_CRC_16BIT, NRF_RADIO_CRC_ADDR_INCLUDE,
+		nrf_radio_crc_configure(NRF_RADIO, ESB_CRC_16BIT,
+					esb_cfg.data_whitening ? NRF_RADIO_CRC_ADDR_SKIP :
+								NRF_RADIO_CRC_ADDR_INCLUDE,
 					0x11021UL); /* CRC poly: x^16+x^12^x^5+1 */
 		break;
 
