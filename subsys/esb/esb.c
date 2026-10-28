@@ -632,7 +632,7 @@ static void update_rf_payload_format_esb_dpl(uint32_t payload_length)
 
 	/* Using 6 bits or 8 bits for length */
 	packet_config.lflen = (CONFIG_ESB_MAX_PAYLOAD_LENGTH <= 32) ? 6 : 8;
-	packet_config.whiteen = false;
+	packet_config.whiteen = esb_cfg.data_whitening;
 	packet_config.big_endian = true;
 	packet_config.balen = (esb_addr.addr_length - 1);
 	packet_config.statlen = 0;
@@ -656,6 +656,7 @@ static void update_rf_payload_format_esb_dpl(uint32_t payload_length)
 
 #endif /* defined(RADIO_PCNF0_PLEN_Msk) */
 
+	nrf_radio_datawhiteiv_set(NRF_RADIO, esb_cfg.whitening_iv);
 	nrf_radio_packet_configure(NRF_RADIO, &packet_config);
 }
 
@@ -665,13 +666,14 @@ static void update_rf_payload_format_esb(uint32_t payload_length)
 		.s0len = 1,
 		.lflen = 0,
 		.s1len = 1,
-		.whiteen = false,
+		.whiteen = esb_cfg.data_whitening,
 		.big_endian = true,
 		.balen = (esb_addr.addr_length - 1),
 		.statlen = payload_length,
 		.maxlen = payload_length
 	};
 
+	nrf_radio_datawhiteiv_set(NRF_RADIO, esb_cfg.whitening_iv);
 	nrf_radio_packet_configure(NRF_RADIO, &packet_config);
 }
 

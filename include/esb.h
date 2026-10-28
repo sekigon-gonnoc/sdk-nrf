@@ -347,6 +347,8 @@ struct esb_config {
 				   *  will be acknowledged ignoring the noack
 				   *  field.
 				   */
+	bool data_whitening;	 /**< Enable RADIO data whitening. */
+	uint8_t whitening_iv;	 /**< Seven-bit RADIO DATAWHITEIV value. */
 	bool use_fast_ramp_up; /**<  When this feature is enabled, radio TXEN and
 				 *  RXEN delays are reduced from 130 µs to 40 µs.
 				 *  The radio peripheral needs some time to start up
